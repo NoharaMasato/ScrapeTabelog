@@ -3,7 +3,7 @@ import pandas as pd
 from time import sleep
 import numpy as np
 
-STATION_NAME = "戸出駅"
+STATION_NAME = "六本木駅"
 TABELOG_URL = "https://tabelog.com/"
 
 # ブラウザを開く。
@@ -40,6 +40,7 @@ for page in range(page_num):
 
 # 星の数をもとにソートする
 shops = df.sort_values('star_val')
+
 # csvファイルに書き出す
 shops.to_csv("restaurant.csv")
 
