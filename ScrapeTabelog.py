@@ -1,10 +1,9 @@
 from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from time import sleep
 import numpy as np
 
-STATION_NAME = "日吉駅"
+STATION_NAME = "戸出駅"
 TABELOG_URL = "https://tabelog.com/"
 
 # ブラウザを開く。
@@ -25,15 +24,13 @@ df = pd.DataFrame(columns= ['name', 'star_val','dinner_price','lunch_price','url
 # # 店の情報を取得
 shop_num = 1
 for page in range(page_num):
-# for page in range(2):
-#     restaurants = driver.find_elements_by_class_name("list-rst")
     restaurants = driver.find_elements_by_class_name("list-rst")
     for restraunt in restaurants:
         shop_name = restraunt.find_element_by_class_name("cpy-rst-name").text
         shop_url = restraunt.find_element_by_class_name("cpy-rst-name").get_attribute("href")
         is_ranked = restraunt.find_elements_by_class_name("list-rst__rating-val")
         dinner_price = restraunt.find_element_by_class_name("cpy-dinner-budget-val").text
-        lunch_price = restraunt.find_element_by_class_name("cpy-lunch-budget-val").text        
+        lunch_price = restraunt.find_element_by_class_name("cpy-lunch-budget-val").text
         shop_star_val = is_ranked[0].text if is_ranked != [] else np.nan
         df.loc[shop_num] = [shop_name,shop_star_val,dinner_price,lunch_price,shop_url]
         shop_num += 1
@@ -41,7 +38,10 @@ for page in range(page_num):
     sleep(1)
     driver.find_elements_by_class_name("c-pagination__arrow--next")[0].click()
 
-df.to_csv("hiyosi.csv")
+# 星の数をもとにソートする
+shops = df.sort_values('star_val')
+# csvファイルに書き出す
+shops.to_csv("restaurant.csv")
+
 # ブラウザを終了する。
 driver.close()
-print(df)
