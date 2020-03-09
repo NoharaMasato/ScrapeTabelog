@@ -6,14 +6,14 @@ import numpy as np
 
 TABELOG_URL = "https://tabelog.com/"
 
-STATION_NAME = "板橋駅"
-KEY_WORD = "チャーハン"
+STATION_NAME = "渋谷駅"
+KEY_WORD = "ラーメン"
 DATE = "2019/5/8(水)"
 NUM_OF_PPL = "3"
 TIME = "19:00"
 
 # ブラウザを開く。
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(executable_path='/Applications/chromedriver')
 driver.get(TABELOG_URL)
 
 # フィールドに値をを入力して検索
